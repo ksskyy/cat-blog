@@ -12,6 +12,13 @@ if(isset($_GET['upd_id'])){
     $select->execute();
     $rows= $select->fetch(PDO::FETCH_OBJ);
 
+    
+    if(isset($_SESSION['user_id']) AND (int)$_SESSION['user_id'] !== (int)$rows->user_id ){
+      
+      header('location:http://localhost/clean-blog/index.php');
+      die();
+    }
+
 
     if(empty($_POST['title'])||empty($_POST['subtitle'])||empty($_POST['body'])){
         echo "please enter you blog content";
@@ -37,8 +44,9 @@ if(isset($_GET['upd_id'])){
 
         if(move_uploaded_file($_FILES['img']['tmp_name'], $dir)){
           header('location:http://localhost/clean-blog/index.php');
+          die();
         }
-        // header('location:http://localhost/clean-blog/index.php');
+        
     }
 
 }
