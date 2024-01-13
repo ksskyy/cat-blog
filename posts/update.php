@@ -13,7 +13,7 @@ if(isset($_GET['upd_id'])){
     $rows= $select->fetch(PDO::FETCH_OBJ);
 
     
-    if(isset($_SESSION['user_id']) AND (int)$_SESSION['user_id'] !== (int)$rows->user_id ){
+    if(isset($_SESSION['user_id']) && (int)$_SESSION['user_id'] !== (int)$rows->user_id ){
       
       header('location:http://localhost/clean-blog/index.php');
       die();

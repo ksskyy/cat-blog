@@ -1,4 +1,5 @@
 <?php 
+require_once("../includes/navbar.php");
 require_once "../config/config.php";
 
 if(isset($_GET['del_id'])){
@@ -8,21 +9,20 @@ if(isset($_GET['del_id'])){
   $select->execute();
   $posts = $select->fetch(PDO::FETCH_OBJ);
 
-  if(isset($_SESSION['user_id']) AND $_SESSION['user_id'] == $posts->user_id ){
-      echo "cannot delete";
-    // header('location:http://localhost/clean-blog/index.php');
-    // die();
+  if(isset($_SESSION['user_id']) && (int)$_SESSION['user_id'] !== (int)$posts->user_id ){
+    
+    header('location:http://localhost/clean-blog/index.php');
+    die();
 
-  }
-  // else{
+  }else{
 
-  //   unlink("images/" .$posts->img."");
+    unlink("images/" .$posts->img."");
   
-  //   $delete = $conn->prepare("DELETE FROM posts WHERE id = :id");
-  //   $delete->execute([
-  //     ':id' => $id
-  //   ]);
-  // }
+    $delete = $conn->prepare("DELETE FROM posts WHERE id = :id");
+    $delete->execute([
+      ':id' => $id
+    ]);
+  }
 
   header("location:http://localhost/clean-blog/index.php");
   die();
